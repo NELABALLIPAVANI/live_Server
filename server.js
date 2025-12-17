@@ -132,9 +132,11 @@ app.post("/ask", async (req, res) => {
     // ✅ CLEAN RESPONSE HERE
     const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-    const cleanAnswer = cleanText(rawText).slice(0, 800);
+    const cleanAnswer = cleanText(rawText).slice(0, 1000);
+     console.log("RAW TEXT FROM GEMINI:", rawText);
 
-    return res.json({ answer: cleanAnswer });
+    // return res.json({ answer: cleanAnswer });
+    return res.json({ answer: rawText || "No response from AI" });
   } catch (err) {
     console.error("ERROR:", err);
     return res.status(500).json({ error: "AI error" });
@@ -144,3 +146,4 @@ app.post("/ask", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
